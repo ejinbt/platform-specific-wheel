@@ -18,8 +18,8 @@ jobs:
 
         with:
            package-dir: .
-           output-dir: 11\wheelhouse 
-           config-file: 11\setup.py 
+           output-dir: wheelhouse 
+           config-file: setup.py
 
       - uses: actions/upload-artifact@v3
         with:
