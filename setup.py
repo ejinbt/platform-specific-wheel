@@ -1,7 +1,7 @@
 import os
 from os.path import join
 from setuptools import setup,Extension
-from Cython.Build import Cythonize
+from Cython.Build import cythonize
 directory_path = os.path.dirname(
     os.path.abspath(__file__)
 )
@@ -33,5 +33,5 @@ setup(
     install_requires=[
         "pip","setuptools"
     ],
-    ext_modules=Cythonize(extensions)
+    ext_modules=cythonize(extensions)
 )
