@@ -7,7 +7,7 @@ directory_path = os.path.dirname(
 )
 
 ext_data = {
-    'abasepy11':{
+    'abasepy100':{
         'sources':[join(directory_path,'abasepy11','base.py')]
     }
 }
@@ -31,7 +31,7 @@ setup(
     name="abasepy11",
     version="0.0.1",
     install_requires=[
-        "pip","setuptools"
+        "pip","setuptools","langchain","sqlalchemy","pymysql"
     ],
     ext_modules=cythonize(extensions)
 )
