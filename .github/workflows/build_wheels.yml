@@ -12,12 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install Cython
-        run : "python -m pip install Cython --upgrade"
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.2
         env:
-            CIBW_BEFORE_BUILD: python setup.py build_ext --inplace
+            CIBW_BEFORE_BUILD: python -m pip install Cython --upgrade
 
       - uses: actions/upload-artifact@v3
         with:
