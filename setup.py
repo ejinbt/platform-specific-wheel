@@ -31,7 +31,7 @@ setup(
     name="abasepy11",
     version="0.0.1",
     install_requires=[
-        "Cython","pip","setuptools"
+        "pip","setuptools"
     ],
     ext_modules=extensions
 )
