@@ -33,5 +33,5 @@ setup(
     install_requires=[
         "Cython","pip","setuptools"
     ],
-    ext_modules=Cythonize(extensions),
+    ext_modules=extensions
 )
