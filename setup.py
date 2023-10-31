@@ -1,7 +1,6 @@
 import os
 from os.path import join
 from setuptools import setup,Extension
-from Cython.Build import Cythonize
 directory_path = os.path.dirname(
     os.path.abspath(__file__)
 )
