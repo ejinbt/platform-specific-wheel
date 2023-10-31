@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Platform Specific Wheel</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="platform-specific-wheel">Platform Specific Wheel</h1>
+<h4 id="package-used-to-build-wheels">package used to build wheels</h4>
+<ul>
+<li>cibuildwheel</li>
+</ul>
+<h2 id="steps-to-reproduce">Steps to reproduce</h2>
+<ul>
+<li>
+<p><img src="file:///f:\programming_files\freelancing\11\readmepic1.png" alt="readmepic"></p>
+</li>
+<li>
+<p>copy this into <a href="http://setup.py">setup.py</a> file</p>
+<pre><code>  	import  os
+
+  	from  os.path  import  join
+
+  	from  setuptools  import  setup,Extension
+
+  	from  Cython.Build  import  cythonize
+
+  	directory_path  =  os.path.dirname(
+
+  	os.path.abspath(__file__)
+
+  	)  
+  	ext_data  = {
+
+  	'PACKAGE-NAME-HERE':{
+
+  	'sources':[join(directory_path,'FOLDER-NAME','base.py')]
+
+  	}
+
+  	}  
+  	extensions  = []
+  	for  name,data  in  ext_data.items():
+  	sources  =  data['sources']
+  	include  =  data.get('include',[])
+  	obj  =  Extension(
+  	name,
+  	sources=sources,
+  	include_dirs=include
+  	)  
+  	extensions.append(obj)
+  	setup(
+  	name=&quot;PUT-PACKAGE-NAME-HERE&quot;,
+  	version=&quot;0.0.1&quot;,
+  	install_requires=[
+  	&quot;pip&quot;,&quot;setuptools&quot;,&quot;langchain&quot;,&quot;sqlalchemy&quot;,&quot;pymysql&quot;
+  	],
+  	ext_modules=cythonize(extensions)
+  	)
+</code></pre>
+</li>
+<li>
+<p>create github action by .github\workflows\build_wheels.yml</p>
+</li>
+<li>
+<p>copy this , you can refer to cibuildwheel docs for more info <a href="https://cibuildwheel.readthedocs.io/en/stable/">https://cibuildwheel.readthedocs.io/en/stable/</a></p>
+<pre><code>  	name:Build
+  	on: [push, pull_request]
+  	jobs:
+  	build_wheels:
+  	name: Build wheels on ${{ matrix.os }}
+  	runs-on: ${{ matrix.os }}
+  	strategy:
+  	matrix:
+  	os: [ubuntu-20.04, windows-2019, macos-11]	  
+  	steps:
+
+  	- uses: actions/checkout@v4
+  	- name: Build wheels
+  	uses: pypa/cibuildwheel@v2.16.2
+  	env:
+  	CIBW_BEFORE_BUILD: python -m pip install Cython
+  	- uses: actions/upload-artifact@v3
+  	with:
+  	path: ./wheelhouse/*.whl
+</code></pre>
+</li>
+<li>
+<p><strong>CIBW_BEFORE_BUILD</strong> line is important , it tells cibuildwheel to install Cython before compiling the package</p>
+</li>
+<li>
+<p>now make a github repo and add these files</p>
+</li>
+<li>
+<p>on pushing , a github workflow will start creating wheels</p>
+</li>
+<li>
+<p>at the end you will be given with artifacts which contains wheel for specific platforms</p>
+</li>
+</ul>
+<h2 id="setuppy"><a href="http://setup.py">setup.py</a></h2>
+<p>This files convert py code into .pyd format . it also contains dependencies needed for installation</p>
+<h2 id="build_wheelsyml">build_wheels.yml</h2>
+<p>This is Github Actions workflow file needed for cibuildwheel</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://medium.com/@xpl/protecting-python-sources-using-cython-dcd940bb188e">https://medium.com/@xpl/protecting-python-sources-using-cython-dcd940bb188e</a></li>
+<li><a href="https://iscinumpy.dev/post/overview-of-cibuildwheel/">https://iscinumpy.dev/post/overview-of-cibuildwheel/</a></li>
+<li><a href="https://cibuildwheel.readthedocs.io/en/stable/setup/#configure-a-ci-service">https://cibuildwheel.readthedocs.io/en/stable/setup/#configure-a-ci-service</a></li>
+<li><a href="https://www.youtube.com/watch?v=53l4HApVUKU&amp;t=547s">https://www.youtube.com/watch?v=53l4HApVUKU&amp;t=547s</a></li>
+<li><a href="https://github.com/pypa/cibuildwheel/issues/404">https://github.com/pypa/cibuildwheel/issues/404</a></li>
+</ul>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>
