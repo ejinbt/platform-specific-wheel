@@ -1,7 +1,7 @@
 import os
 from os.path import join
 from setuptools import setup,Extension
-
+from Cython.Build import Cythonize
 directory_path = os.path.dirname(
     os.path.abspath(__file__)
 )
@@ -31,7 +31,7 @@ setup(
     name="abasepy11",
     version="0.0.1",
     install_requires=[
-        "cython","pip","setuptools"
+        "Cython","pip","setuptools"
     ],
-    ext_modules=extensions,
+    ext_modules=Cythonize(extensions),
 )
