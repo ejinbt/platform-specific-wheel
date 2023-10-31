@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Build Setup
-        run: python setup.py build_ext --inplace
+        run: python ../setup.py build_ext --inplace
       - uses: actions/checkout@v4
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.2
