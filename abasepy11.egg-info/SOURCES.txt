@@ -1,8 +1,0 @@
-LICENSE
-README.md
-setup.py
-F:/programming_files/freelancing/11/abasepy11/base.c
-abasepy11.egg-info/PKG-INFO
-abasepy11.egg-info/SOURCES.txt
-abasepy11.egg-info/dependency_links.txt
-abasepy11.egg-info/top_level.txt
