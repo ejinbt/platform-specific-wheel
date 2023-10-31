@@ -8,7 +8,7 @@ directory_path = os.path.dirname(
 
 ext_data = {
     'abasepyplatforms':{
-        'sources':[join(directory_path,'abasepy100','base.py')]
+        'sources':[join(directory_path,'abasepyplatforms','base.py')]
     }
 }
 
