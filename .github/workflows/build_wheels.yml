@@ -12,7 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      - name: Install Cython
+        run : "python -m pip install Cython --upgrade"
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.2
         env:
