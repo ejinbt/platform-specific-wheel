@@ -22,6 +22,3 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
       
-      - uses: actions/setup-python@v3
-      - name: Build Setup
-        run: python ../setup.py build_ext --inplace
