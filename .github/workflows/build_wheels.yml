@@ -17,9 +17,9 @@ jobs:
         uses: pypa/cibuildwheel@v2.16.2
 
         with:
-           package-dir: .
-           output-dir: wheelhouse
-           config-file: "setup.py"
+           package-dir: ../
+           output-dir: ../wheelhouse
+           config-file: "../setup.py"
 
       - uses: actions/upload-artifact@v3
         with:
