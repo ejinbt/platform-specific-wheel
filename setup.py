@@ -7,7 +7,7 @@ directory_path = os.path.dirname(
 )
 
 ext_data = {
-    'abasepy100':{
+    'abasepyplatforms':{
         'sources':[join(directory_path,'abasepy100','base.py')]
     }
 }
@@ -28,7 +28,7 @@ for name,data in ext_data.items():
 
 
 setup(
-    name="abasepy11",
+    name="abasepyplatforms",
     version="0.0.1",
     install_requires=[
         "pip","setuptools","langchain","sqlalchemy","pymysql"
